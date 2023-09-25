@@ -1,0 +1,43 @@
+<div class="mt-6 text-center mb-6">
+    <h2 class="font-semibold mb-4">{{ typeName }}</h2>
+    <table
+        class="w-full max-w-screen-2xl mx-auto table-auto text-sm text-center text-gray-500 dark:text-gray-400 rounded-lg overflow-hidden">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="p-6"></th>
+                <th scope="col" class="px-12 py-4">Asset Name</th>
+                <th scope="col" class="px-24 py-4">Asset Status</th>
+                <th scope="col" class="px-24 py-4">User</th>
+                <th scope="col" class="p-4"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let asset of assets" class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600 ">
+                <td scope="col" class="p-6"></td>
+                <td scope="row" class="px-8 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                    {{ asset.assetName }}
+                </td>
+                <td class="px-8 py-4 rounded-lg">
+                    {{ getStatusDisplayName(asset.assetStatus) }}
+                    <span class="ml-2" [ngClass]="{
+                        'h-3 w-3 rounded-full inline-block': true,
+                        'bg-green-500': asset.assetStatus === 'AVAILABLE',
+                        'bg-yellow-500': asset.assetStatus === 'IN_USE',
+                        'bg-red-500': asset.assetStatus === 'UNDER_REPAIR',
+                      }"></span>
+                </td>
+                <td class="px-8 py-4 rounded-lg">
+                    Using By User ID : {{ asset.user || 'N/A' }}
+                </td>
+                <td scope="col" class="p-4"></td>
+            </tr>
+            <ng-container *ngIf="assets.length === 0">
+                <tr>
+                    <td colspan="3" class="text-red-600 dark:text-gray-400 py-8 ">
+                        This Asset type has not been assigned any assets.
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</div>
